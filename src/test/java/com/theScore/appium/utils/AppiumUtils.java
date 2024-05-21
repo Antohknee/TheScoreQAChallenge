@@ -63,14 +63,6 @@ public class AppiumUtils {
         }
     }
 
-    public boolean isElementVisible(WebElement element) {
-        try {
-            return element.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
     public boolean isElementVisible(By locator) {
         try {
             driver.findElement(locator);
@@ -80,9 +72,29 @@ public class AppiumUtils {
         }
     }
 
+    public boolean isElementVisible(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public void search(WebElement element, String text) {
         element.click();
         element.sendKeys(text);
+    }
+
+    public void scrollUntilElementVisible(By locator, SwipeDirection direction, int maxScrolls, double swipePercentage) {
+        int swipeCount = 0;
+        while (swipeCount <= maxScrolls) {
+            if (isElementVisible(locator)) {
+                return;
+            }
+            swipe(direction, swipePercentage);
+            swipeCount++;
+        }
+        throw new NoSuchElementException("Element with locator " + locator + " not found.");
     }
 
     public void swipe(SwipeDirection direction, double percentage) {
@@ -129,17 +141,5 @@ public class AppiumUtils {
                 .addAction(finger.createPointerMove(Duration.ofMillis(duration), PointerInput.Origin.viewport(), endX, endY))
                 .addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         driver.perform(Collections.singletonList(swipe));
-    }
-
-    public void scrollUntilElementVisible(By locator, SwipeDirection direction, int maxScrolls, double swipePercentage) {
-        int swipeCount = 0;
-        while (swipeCount <= maxScrolls) {
-            if (isElementVisible(locator)) {
-                return;
-            }
-            swipe(direction, swipePercentage);
-            swipeCount++;
-        }
-        throw new NoSuchElementException("Element with locator " + locator + " not found.");
     }
 }

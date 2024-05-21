@@ -38,7 +38,7 @@ public class TSWelcomePage {
         continueButton.click();
         maybeLaterButton.click();
         searchBarButton.click();
-        searchFavoriteTeam("Boston Celtics");
+        searchFavoriteTeam("Canada");
         firstOptionOfSearch.click();
         continueButton.click();
         continueButton.click();

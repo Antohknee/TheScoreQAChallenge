@@ -17,8 +17,14 @@ public class TSHomePage {
     @FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"Navigate up\"]")
     public WebElement backButton;
 
+    @FindBy(xpath = "//android.widget.TextView[@text='Birth Date']/following-sibling::*[1]")
+    public WebElement birthDate;
+
     @FindBy(xpath = "//android.widget.ImageView[@resource-id=\"com.fivemobile.thescore:id/dismiss_modal\"]")
     public WebElement dismissModal;
+
+    @FindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"Info\"]")
+    public WebElement infoTab;
 
     @FindBy(xpath = "//android.widget.ImageButton")
     public WebElement myAccount;
@@ -46,6 +52,7 @@ public class TSHomePage {
         driver.findElement(By.xpath(tpnXPath)).click();
 
     }
+
     public TSHomePage(AppiumDriver driver, AppiumUtils utils) {
         this.driver = driver;
         this.utils = utils;

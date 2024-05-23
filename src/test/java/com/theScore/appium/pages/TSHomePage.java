@@ -23,20 +23,8 @@ public class TSHomePage {
     @FindBy(xpath = "//android.widget.ImageView[@resource-id=\"com.fivemobile.thescore:id/dismiss_modal\"]")
     public WebElement dismissModal;
 
-    @FindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"Info\"]")
-    public WebElement infoTab;
-
     @FindBy(xpath = "//android.widget.ImageButton")
     public WebElement myAccount;
-
-    @FindBy(xpath = "//android.widget.TextView[@resource-id=\"com.fivemobile.thescore:id/txt_player_name\"]")
-    public WebElement playerName;
-
-    @FindBy(xpath = "//android.widget.TextView[@text,\"2023-24 SEASON\"]")
-    public WebElement seasonOfStats;
-
-    @FindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"Season\"]")
-    public WebElement seasonTab;
 
     @FindBy(xpath = "//android.widget.TextView[@resource-id=\"com.fivemobile.thescore:id/search_bar_text_view\"]")
     public WebElement teamsPlayersNewsPlaceHolder;

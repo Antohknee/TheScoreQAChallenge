@@ -14,42 +14,42 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.net.MalformedURLException;
 import java.util.stream.Stream;
 
-class PlayerSearchTest {
+class TeamSearchTest {
 
     private final AppiumUtils utils = new AppiumUtils(PlatFormType.ANDROID);
     private final TSHomePage homePage;
     private final TSProfilePage profilePage;
     private final TSWelcomePage welcomePage;
 
-    private static Stream<Arguments> playersAndDOBs() {
+    private static Stream<Arguments> teams() {
         return Stream.of(
-                Arguments.of("Jayson Tatum", "1998-03-03"),
-                Arguments.of("LeBron James", "1984-12-30"),
-                Arguments.of("Jamal Murray", "1997-02-23")
+                Arguments.of("Boston Celtics", "Boston", "TD Garden"),
+                Arguments.of("Los Angeles Lakers", "Los Angeles", "Crypto.com Arena"),
+                Arguments.of("Denver Nuggets", "Denver", "Ball Arena")
         );
     }
-    
+
     @BeforeEach
     void setup() {
         welcomePage.completeTutorial();
     }
 
     @ParameterizedTest
-    @MethodSource("playersAndDOBs")
-    void SearchNBAPlayerTest(String player, String expectedDOB) {
+    @MethodSource("teams")
+    void SearchNBATeamTest(String team, String location, String arenaName) {
         homePage.dismissModal.click();
-        homePage.searchTeamPlayerNews(player);
+        homePage.searchTeamPlayerNews(team);
 
-        // Check that name of profile matches the desired player
-        Assertions.assertEquals(profilePage.playerName.getText(), player);
+        // Check that name of profile matches the desired team
+        Assertions.assertEquals(profilePage.teamName.getText(), team);
 
-        // Check that clicking season tab contains stats for the 2023-24 season
-        profilePage.seasonTab.click();
-        Assertions.assertTrue(utils.isElementVisible(profilePage.seasonOfStats));
+        // Check that clicking season tab contains stats such as Point-per-game (PPG)
+        profilePage.teamStatsTab.click();
+        Assertions.assertTrue(utils.isElementVisible(utils.getElementByText("PPG")));
 
-        // Check player date of birth matches up
-        profilePage.infoTab.click();
-        Assertions.assertTrue(homePage.birthDate.getText().contains(expectedDOB));
+        // Check information of location and arena name is correct
+        profilePage.selectTab("Info");
+        profilePage.verifyInfo(location, arenaName);
 
         // Check that when going back shows the search input
         homePage.backButton.click();
@@ -65,7 +65,7 @@ class PlayerSearchTest {
         utils.closeApp();
     }
 
-    public PlayerSearchTest() throws MalformedURLException {
+    public TeamSearchTest() throws MalformedURLException {
         AppiumDriver driver = utils.launchApp();
         homePage = new TSHomePage(driver, utils);
         profilePage = new TSProfilePage(driver, utils);

@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="NBA Search Tests">
+    <test name="NBA Player Search Test">
+        <classes>
+            <class name="com.theScore.appium.tests.PlayerSearchTest"/>
+        </classes>
+    </test>
+    <test name="NBA Team Search Test">
+        <classes>
+            <class name="com.theScore.appium.tests.TeamSearchTest"/>
+        </classes>
+    </test>
+</suite>

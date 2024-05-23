@@ -85,52 +85,16 @@ public class AppiumUtils {
         element.sendKeys(text);
     }
 
-    public void scrollUntilElementVisible(By locator, SwipeDirection direction, int maxScrolls, double swipePercentage) {
+    public void scrollUntilElementVisible(By locator, SwipeDirection direction, int maxScrolls) {
         int swipeCount = 0;
         while (swipeCount <= maxScrolls) {
             if (isElementVisible(locator)) {
                 return;
             }
-            swipe(direction, swipePercentage);
+            swipeAction(direction.startX, direction.startY, direction.endX, direction.endY, 500);
             swipeCount++;
         }
         throw new NoSuchElementException("Element with locator " + locator + " not found.");
-    }
-
-    public void swipe(SwipeDirection direction, double percentage) {
-        Dimension size = driver.manage().window().getSize();
-        int startX, endX, startY, endY;
-
-        switch (direction) {
-            case UP:
-                startX = size.width / 2;
-                startY = (int) (size.height * (1 - percentage));
-                endX = startX;
-                endY = (int) (size.height * percentage);
-                break;
-            case DOWN:
-                startX = size.width / 2;
-                startY = (int) (size.height * percentage);
-                endX = startX;
-                endY = (int) (size.height * (1 - percentage));
-                break;
-            case LEFT:
-                startY = size.height / 2;
-                startX = (int) (size.width * (1 - percentage));
-                endY = startY;
-                endX = (int) (size.width * percentage);
-                break;
-            case RIGHT:
-                startY = size.height / 2;
-                startX = (int) (size.width * percentage);
-                endY = startY;
-                endX = (int) (size.width * (1 - percentage));
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid direction: " + direction);
-        }
-
-        swipeAction(startX, startY, endX, endY, 1000);
     }
 
     public void swipeAction(int startX, int startY, int endX, int endY, int duration) {
